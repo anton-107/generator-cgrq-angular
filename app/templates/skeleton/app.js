@@ -1,30 +1,44 @@
-angular.module('<%= _.camelize(appname) %>', ['ui.bootstrap','ui.utils','<%= routerModuleName %>','ngAnimate']);
-<% if (!uirouter) { %>
-angular.module('<%= _.camelize(appname) %>').config(function($routeProvider) {
+define([
+    'angular',
+    'ui.bootstrap',
+    '<%= routerModuleName %>',
+    'ui.utils',
+    'ngAnimate',
+    /* Add links to app's submodules above */
+], function (angular) {
+    'use strict';
 
-    /* Add New Routes Above */
-    $routeProvider.otherwise({redirectTo:'/home'});
+    angular.module('<%= _.camelize(appname) %>', ['ui.bootstrap','ui.utils','<%= routerModuleName %>','ngAnimate']);
+    <% if (!uirouter) { %>
+    angular.module('<%= _.camelize(appname) %>').config(function($routeProvider) {
 
-});
-<% } %><% if (uirouter) { %>
-angular.module('<%= _.camelize(appname) %>').config(function($stateProvider, $urlRouterProvider) {
+        /* Add New Routes Above */
+        $routeProvider.otherwise({redirectTo:'/home'});
 
-    /* Add New States Above */
-    $urlRouterProvider.otherwise('/home');
+    });
+    <% } %><% if (uirouter) { %>
+    angular.module('<%= _.camelize(appname) %>').config(function($stateProvider, $urlRouterProvider) {
 
-});
-<% } %>
-angular.module('<%= _.camelize(appname) %>').run(function($rootScope) {
+        /* Add New States Above */
+        $urlRouterProvider.otherwise('/home');
 
-    $rootScope.safeApply = function(fn) {
-        var phase = $rootScope.$$phase;
-        if (phase === '$apply' || phase === '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
+    });
+    <% } %>
+    angular.module('<%= _.camelize(appname) %>').run(function($rootScope) {
+
+        $rootScope.safeApply = function(fn) {
+            var phase = $rootScope.$$phase;
+            if (phase === '$apply' || phase === '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
             }
-        } else {
-            this.$apply(fn);
-        }
-    };
+        };
+
+    });
+
+    angular.bootstrap(document, ['<%= _.camelize(appname) %>']);
 
 });

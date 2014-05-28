@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="<%= _.camelize(appname) %>">
+<html>
 <head>
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,24 +11,47 @@
   <!-- Livereload script for development only (stripped during dist build) -->
   <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
 
-  <!-- JS from Bower Components -->
-  <script src="bower_components/less.js/dist/less-1.6.2.js" data-concat="false"></script>
-  <script src="bower_components/jquery/jquery.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="<%= routerJs %>"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
-  <!-- Add New Bower Component JS Above -->
+  <!-- Load require.js -->
+  <script src="bower_components/requirejs/require.js"></script>
+  <!-- Configure require.js config -->
+  <script>
+      requirejs.config({
+          paths: {
+              'angular': 'bower_components/angular/angular',
+              'ui.bootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
+              'ui.utils': 'bower_components/angular-ui-utils/ui-utils',
+              <% if(uirouter) { print("'ui.router': 'bower_components/angular-ui-router/release/angular-ui-router',"); } else { print("'ngRoute': 'bower_components/angular-route/angular-route',"); } %>
+              'ngAnimate': 'bower_components/angular-animate/angular-animate',
+              'ngCookies': 'bower_components/angular-cookies/angular-cookies',
+              'ngResource': 'bower_components/angular-resource/angular-resource',
+              'jquery': 'bower_components/jquery/jquery',
+              'moment': 'bower_components/moment/moment',
+              '_': 'bower_components/underscore/underscore',
+              /* Add bower components above */
 
+              /* Add custom modules above */
+          },
+          shim: {
+              'angular' : {'exports' : 'angular'},
+              'ui.bootstrap': { 'deps': ['angular'], exports: 'angular' },
+              'ui.utils': { 'deps': ['angular'], exports: 'angular' },
+              'ui.router': { 'deps': ['angular'], exports: 'angular' },
+              'ngAnimate': { 'deps': ['angular'], exports: 'angular' },
+              'ngRoute': { 'deps': ['angular'], exports: 'angular' },
+              'ngCookies': { 'deps': ['angular'], exports: 'angular' },
+              'ngResource': { 'deps': ['angular'], exports: 'angular' },
+              '_': {'exports': '_'},
+              /* Add require.js shims above */
+          }
+      });
+  </script>
 
   <!-- Main App JS -->
-  <script src="app.js"></script>
-  <!-- Add New Component JS Above -->
+  <script>
+      require(['app'], function () {
+
+      });
+  </script>
 
   <div>
     <div id="content" class="container">
