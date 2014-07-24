@@ -18,13 +18,10 @@
       requirejs.config({
           paths: {
               'angular': 'bower_components/angular/angular',
-              'ui.bootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
               'ui.utils': 'bower_components/angular-ui-utils/ui-utils',
-              <% if(uirouter) { print("'ui.router': 'bower_components/angular-ui-router/release/angular-ui-router',"); } else { print("'ngRoute': 'bower_components/angular-route/angular-route',"); } %>
-              'ngAnimate': 'bower_components/angular-animate/angular-animate',
+              'ui.router': 'bower_components/angular-ui-router/release/angular-ui-router',
               'ngCookies': 'bower_components/angular-cookies/angular-cookies',
               'ngResource': 'bower_components/angular-resource/angular-resource',
-              'jquery': 'bower_components/jquery/jquery',
               'moment': 'bower_components/moment/moment',
               '_': 'bower_components/underscore/underscore',
               /* Add bower components above */
@@ -33,11 +30,8 @@
           },
           shim: {
               'angular' : {'exports' : 'angular'},
-              'ui.bootstrap': { 'deps': ['angular'], exports: 'angular' },
               'ui.utils': { 'deps': ['angular'], exports: 'angular' },
               'ui.router': { 'deps': ['angular'], exports: 'angular' },
-              'ngAnimate': { 'deps': ['angular'], exports: 'angular' },
-              'ngRoute': { 'deps': ['angular'], exports: 'angular' },
               'ngCookies': { 'deps': ['angular'], exports: 'angular' },
               'ngResource': { 'deps': ['angular'], exports: 'angular' },
               '_': {'exports': '_'},
@@ -56,8 +50,7 @@
   <div>
     <div id="content" class="container">
       <div class="row">
-        <div <%= routerViewDirective %>>
-        </div>
+          <ui-view autoscroll="false" />
       </div>
     </div>
   </div>

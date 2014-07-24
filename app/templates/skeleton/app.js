@@ -1,29 +1,14 @@
 define([
     'angular',
     'ui.bootstrap',
-    '<%= routerModuleName %>',
-    'ui.utils',
-    'ngAnimate',
+    'ui.router',
+    'ui.utils'
     /* Add links to app's submodules above */
 ], function (angular) {
     'use strict';
 
-    angular.module('<%= _.camelize(appname) %>', ['ui.bootstrap','ui.utils','<%= routerModuleName %>','ngAnimate']);
-    <% if (!uirouter) { %>
-    angular.module('<%= _.camelize(appname) %>').config(function($routeProvider) {
+    angular.module('<%= _.camelize(appname) %>', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
 
-        /* Add New Routes Above */
-        $routeProvider.otherwise({redirectTo:'/home'});
-
-    });
-    <% } %><% if (uirouter) { %>
-    angular.module('<%= _.camelize(appname) %>').config(function($stateProvider, $urlRouterProvider) {
-
-        /* Add New States Above */
-        $urlRouterProvider.otherwise('/home');
-
-    });
-    <% } %>
     angular.module('<%= _.camelize(appname) %>').run(function($rootScope) {
 
         $rootScope.safeApply = function(fn) {
